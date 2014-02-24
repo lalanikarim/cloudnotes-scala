@@ -1,0 +1,24 @@
+@(message: String)
+
+@main("Welcome to Play") {
+	<button id="button">A button</button>
+	<div>
+    @message
+    </div>
+    
+    <div class="note ui-widget-content" style="width:180px;height:180px;position:absolute;z-index:1">
+    	<div class="note-header ui-widget-header">Header</div>
+    	<div class="note-body">
+    		<div id="note1" class="editable">content</div>
+    	</div>
+    </div>
+    
+    <div class="note ui-widget-content" style="width:180px;height:180px;position:absolute;z-index:2">
+    	<div class="note-header ui-widget-header">Header</div>
+    	<div class="note-body">
+			<div id="note2" class="editable">content</div>
+		</div>
+    </div>
+    
+    <div class="editable" id="editable">text</div>
+}
