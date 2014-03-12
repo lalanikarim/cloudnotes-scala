@@ -1,22 +1,20 @@
 package models;
 
-import play.db.ebean.*;
 import javax.persistence.*;
 
-@Entity
-public class NoteACL extends Model {
+import net.vz.mongodb.jackson.DBRef;
 
-	@Id
-	public Integer Id;
+public class NoteACL{
+
+	//public Integer Id;
 	
-	@ManyToOne
-	public Note ACLNote;
+	//public Note ACLNote;
 	
-	@ManyToOne
-	public User ACLUser;
+	//public User ACLUser;
 	
+	public DBRef<User, String> ACLUser;
+
 	public NotePermission Permission;
-	
 	
 	public enum NotePermission {
 		ReadOnly,

@@ -6,6 +6,7 @@
 create table note (
   id                        integer not null,
   width                     integer,
+  is_favorite               boolean,
   height                    integer,
   position                  integer,
   constraint pk_note primary key (id))

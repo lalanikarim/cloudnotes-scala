@@ -1,16 +1,20 @@
 $ ->
   $('#button').button()
   $('.note').resizable()
-  $('.note').draggable()
+  $('.note').draggable({
+    stop: () ->
+    	$("#notepositionid").val $(this).attr "id"
+    	$("#notepositiontop").val $(this).position().top
+    	$("#notepositionleft").val $(this).position().left
+    	$("#noteposition").submit()
+  })
   $('div.editable').bind 'click', () ->
     editablediv this
     
-    #$(newitem).value = $(newitem).value
-    #$(this).replaceWith '<div id="' + this.id + '">$(this).text()</div>'
 window.test = () ->
   alert "this is alert"
 window.editablediv = (obj) ->
-  $(obj).replaceWith('<input id="' + obj.id + '" type="text" value=""/>')
+  $(obj).replaceWith('<input id="' + obj.id + '" name="'+ obj.name + '" type="text" value=""/>')
   newitem = $("#" + obj.id)
     
   $(newitem).focus()
@@ -18,7 +22,10 @@ window.editablediv = (obj) ->
   $(newitem).val $(obj).text()
   
   $(newitem).bind 'blur', () ->
-    editableinput newitem
+    
+    $(newitem).parent().append '<input name="' + $(obj).attr("name") + '" type="hidden" value="' + $(newitem).val() + '"/>'
+    $(newitem).parent().submit()
+    #editableinput newitem
 
 window.editableinput = (obj) ->
   $(obj).replaceWith '<div id="' + obj.id + '">' + $(obj).val() + '</div>'

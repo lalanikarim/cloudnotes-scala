@@ -1,25 +1,40 @@
 package models;
 
 import java.util.*;
-import javax.persistence.*;
-import play.db.ebean.*;
 
-@Entity
-public class Note extends Model {
+import org.codehaus.jackson.annotate.*;
+import net.vz.mongodb.jackson.*;
 
+@MongoCollection(name = "notes")
+public class Note {
+
+	@ObjectId
 	@Id
-	public Integer Id;
+	public String Id;
 	
-	@OneToMany
+	@JsonProperty("title")
+	public String Title;
+	
+	@JsonProperty("items")
 	public List<NoteItem> Items = new ArrayList<NoteItem>();
 	
-	@OneToMany
+	@JsonProperty("acl")
 	public List<NoteACL> ACL = new ArrayList<NoteACL>();
 	
+	@JsonProperty("width")
 	public Integer Width;
 	
+	@JsonProperty("height")
 	public Integer Height;
 	
+	@JsonProperty("position")
 	public Integer Position;
+	
+	@JsonProperty("left")
+	public Integer Left;
+	
+	@JsonProperty("top")
+	public Integer Top;
+	
 
 }

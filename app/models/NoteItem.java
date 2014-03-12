@@ -1,23 +1,20 @@
 package models;
 
 import java.util.*;
-import javax.persistence.*;
-import play.db.ebean.*;
 
-@Entity
-public class NoteItem extends Model {
+import javax.persistence.*;
+
+import net.vz.mongodb.jackson.DBRef;
+
+public class NoteItem{
 	
-	@Id
 	public Integer Id;
 	
-	@ManyToOne
-	public Note ParentNote;
+	//public Note ParentNote;
 	
-	@ManyToOne
-	public User Author;
+	public DBRef<User,String> Author;
 	
 	public Date CreatedOn;
 	
-	@Column(length = 1024)
 	public String NoteText;
 }
