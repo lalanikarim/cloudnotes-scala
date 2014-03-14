@@ -3,23 +3,29 @@
 @import models._
 @import helper._
 
-<div id="@note.Id" class="note ui-widget-content" style="top:@{note.Top}px;left:@{note.Left}px; width:@{note.Width};height:@{note.Height};position:absolute;z-index:@{note.Position}">
+<div id="@note.Id" class="note ui-widget-content" style="top:@{note.Top}px;left:@{note.Left}px; width:@{note.Width}px;height:@{note.Height}px;position:absolute;z-index:@{note.Position}">
     	<div class="note-header ui-widget-header">
+    	<ul style="float:right">
+    	<li class="delete-note"></li>
+    	</ul>
     	@form(routes.NoteController.save()){
-			<div id="title" class="editable">@note.Title (@note.Id)</div>
+			<div id="title" name="title" class="editable">@if(note.Title.length() > 0){@note.Title} else {@note.Id}</div>
 			<input name="id" type="hidden" value="@note.Id"/>
 		}
 		</div>
     	<div class="note-body">
+    		<div style="height:@if(note.Height != null && note.Height > 35){note.Height - 35}px">
     		@for(item <- note.Items){
     			@form(routes.NoteController.saveitem(note.Id)){
     			<div name="notetext" id="note-line-@note.Id-@item.Id" class="editable">@item.NoteText</div>
+				<input name="itemid" value="@item.Id" type="hidden"/>
     			}
     		}
     		@form(routes.NoteController.saveitem(note.Id)){
     			<div name="notetext" id="note-line-@note.Id" class="editable">Enter</div>
-    			<input name="itemid" value="-1" type="hidden"/>  
-    		}  		
+    			<input name="itemid" value="0" type="hidden"/>  
+    		}
+    		</div>  		
     	</div>
     </div>
     

@@ -2,7 +2,7 @@
 @import models._
 
 @main("Welcome to Play") {
-	<button id="button">Add a note</button>
+	<a href="@routes.NoteController.create()" id="button">Add a note</a>
 	<div>
     @message
     </div>
@@ -31,5 +31,10 @@
     	<input id="notepositionid" name="id" type="hidden"/>
     	<input id="notepositiontop" name="top" type="hidden"/>
     	<input id="notepositionleft" name="left" type="hidden"/>
+    </form>
+    <form id="notedimension" action="@routes.NoteController.savedimension()" method="POST">
+    	<input id="notedimensionid" name="id" type="hidden"/>
+    	<input id="notedimensionheight" name="height" type="hidden"/>
+    	<input id="notedimensionwidth" name="width" type="hidden"/>
     </form>
 }

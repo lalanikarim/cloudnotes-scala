@@ -11,10 +11,22 @@
     text-align: center;
     //height: 35px;
     width: 100%;
+    & textarea {
+      width: 90%;
+      height:20px;
+    }
   }
   .note-body {
-    width: 100%;    
+    width: 100%;
+    & > div {
+      overflow: auto;
+    }
+    & textarea {
+      width: 90%;
+    }
+    height: 100%;
   }
+  
   min-width: 180px;
   min-height: 180px;
   padding: 0.5em;

@@ -20,11 +20,12 @@ public class NoteController extends Controller {
 	private static JacksonDBCollection<models.Note, String> notes = MongoDB.collection(models.Note.class, String.class,play.api.Play.current());
 	public static Result create() {
 		
-		models.Note newNote = new models.Note();
-		String id = notes.save(newNote).getSavedId();
-		newNote = notes.findOneById(id);
+		Note newNote = new Note();
+		newNote.Title = "New Note";
+		notes.save(newNote).getSavedId();
+		//newNote = notes.findOneById(id);
 		
-		return ok(index.render(newNote));
+		return redirect("/");
 	}
 	
 	public static Result get(Integer id){
@@ -53,33 +54,55 @@ public class NoteController extends Controller {
 		notes.updateById(id, DBUpdate.set("left", Math.floor(Double.parseDouble(left))).set("top", Math.floor( Double.parseDouble(top))));
 		return redirect("/");
 	}
+	
+	public static Result savedimension(){
+		Map<String,String> data = dynamicForm.bindFromRequest().data();
+		String id = data.get("id");
+		String height = data.get("height");
+		String width = data.get("width");
+		
+		notes.updateById(id, DBUpdate.set("height", Math.floor(Double.parseDouble(height))).set("width", Math.floor( Double.parseDouble(width))));
+		return redirect("/");
+	}
 
 	public static Result saveitem(String noteid){
 		Map<String,String> data = dynamicForm.bindFromRequest().data();
 		String text = data.get("notetext");
-		int itemid = Integer.parseInt(data.get("itemid"));
+		
+		int itemid = 0;
+		String itemidstr = data.get("itemid");
+		if(itemidstr != null && isNumeric(itemidstr)){
+			itemid = Integer.parseInt(itemidstr);
+		}
 		Note fromDB = notes.findOneById(noteid);
 		NoteItem item = null;
 	
-		if(fromDB.Items.size() == 0)
-		{
-			item = new NoteItem();
-		}
-		else
-		{
+		if(itemid == 0){
+			if(text.length() > 0){
+				item = new NoteItem();
+				item.Id = fromDB.Items.size()+1;
+				fromDB.Items.add(item);
+			}
+		} else {	
+			
 			for(NoteItem ni : fromDB.Items){
 				if(ni != null && ni.Id != null && ni.Id == itemid){
 					item = ni;
 					break;
 				}
-			}
-			if(item == null){
-				item = new NoteItem();
-			}
+			}			
 		}
-		item.NoteText = text;
-		fromDB.Items.add(item);
-		notes.save(fromDB);
+		if(item != null){
+			if(text.length() > 0){
+				item.NoteText = text;
+			} else {
+				fromDB.Items.remove(item);
+			}
+			notes.save(fromDB);
+		}
 		return redirect("/");
 	}
+    public static boolean isNumeric(String s) {  
+        return java.util.regex.Pattern.matches("\\d+", s);  
+    }  
 }
