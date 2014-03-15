@@ -1,19 +1,26 @@
 .border() {
   border: solid black 1px;
 }
+.notes-menu {
+	.menu-button {
+		float:right;
+	}
+}
 .note {
-  //.border();
   font-family: "comic sans";
   position:absolute;
   .note-header {
-    //.border();
     margin: 0;
     text-align: center;
-    //height: 35px;
-    width: 100%;
     & textarea {
-      width: 90%;
       height:20px;
+      border: none;      
+    }
+    .note-header-buttons {
+      float:right;
+      
+      div {
+      }      
     }
   }
   .note-body {
@@ -23,6 +30,7 @@
     }
     & textarea {
       width: 90%;
+      border:none;
     }
     height: 100%;
   }

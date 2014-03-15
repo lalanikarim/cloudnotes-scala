@@ -1,5 +1,4 @@
 $ ->
-  $('#button').button()
   $('.note').resizable({
     stop: () ->
     	$("#notedimensionid").val $(this).attr "id"
@@ -15,7 +14,13 @@ $ ->
     	$("#notepositionleft").val $(this).position().left
     	$("#noteposition").submit()
   })
-  $('.delete-note').button {icons:{primary:"ui-icon-trash"}}
+  $('.hoverable').bind 'mouseenter', () ->
+    $(this).addClass('ui-state-hover')
+  $('.hoverable').bind 'mouseleave', () ->
+    $(this).removeClass('ui-state-hover')
+  $('.delete-note').bind 'click', () ->
+    $(this).parent().submit()
+  
   $('div.editable').bind 'click', () ->
     editablediv this
     
@@ -23,11 +28,11 @@ window.test = () ->
   alert "this is alert"
   
 window.editablediv = (obj) ->
-  $(obj).replaceWith('<textarea id="' + $(obj).attr("id") + '" name="'+ $(obj).attr("name") + '" type="text" value=""/>')
+  $(obj).replaceWith('<textarea id="' + $(obj).attr("id") + '" name="'+ $(obj).attr("name") + '"></textarea>')
   newitem = $("#" + $(obj).attr("id"))
     
   $(newitem).focus()  
-  $(newitem).val $(obj).text().replace("<br />","\r\n")  
+  $(newitem).html $(obj).text().replace("<br />","\r\n")  
   $(newitem).bind 'change', () ->
     $(newitem).parent().append '<input  name="' + $(obj).attr("name") + '" type="hidden" value="' + $(newitem).val() + '"/>'
     $(newitem).parent().submit()

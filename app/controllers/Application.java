@@ -14,10 +14,9 @@ import views.html.*;
 public class Application extends Controller {
 
     public static Result index() {
-    	//org.h2.Driver
     	JacksonDBCollection<Note, String> coll = MongoDB.collection(Note.class, String.class, play.api.Play.current());
     	
-    	return ok(index.render("Your new application is ready.",coll.find().toArray(),NoteController.dynamicForm));
+    	return ok(index.render("Your notes application is ready.",coll.find().toArray(),NoteController.dynamicForm));
     }
 
 }

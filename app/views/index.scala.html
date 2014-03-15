@@ -1,8 +1,12 @@
 @(message: String)(notes: List[Note])(dynamicForm:DynamicForm)
 @import models._
 
-@main("Welcome to Play") {
-	<a href="@routes.NoteController.create()" id="button">Add a note</a>
+@main("Cloud Notes!") {
+	<div class="notes-menu">
+		<div class="hoverable menu-button ui-state-default ui-corner-all">
+			<a href="@routes.NoteController.create()" class="ui-icon ui-icon-circle-plus" id="button">+</a>
+		</div>
+	</div>
 	<div>
     @message
     </div>
@@ -10,22 +14,6 @@
     @for(note <- notes){
     	@views.html.note.index(note)
     }
-    <!--
-    <div class="note ui-widget-content" style="width:180px;height:180px;position:absolute;z-index:1">
-    	<div class="note-header ui-widget-header">Header</div>
-    	<div class="note-body">
-    		<div id="note1" class="editable">content</div>
-    	</div>
-    </div>
-    
-    <div class="note ui-widget-content" style="width:180px;height:180px;position:absolute;z-index:2">
-    	<div class="note-header ui-widget-header">Header</div>
-    	<div class="note-body">
-			<div id="note2" class="editable">content</div>
-		</div>
-    </div>
-    -->
-    <div class="editable" id="editable">text</div>
     
     <form id="noteposition" action="@routes.NoteController.saveposition()" method="POST">
     	<input id="notepositionid" name="id" type="hidden"/>

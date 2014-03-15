@@ -23,7 +23,6 @@ public class NoteController extends Controller {
 		Note newNote = new Note();
 		newNote.Title = "New Note";
 		notes.save(newNote).getSavedId();
-		//newNote = notes.findOneById(id);
 		
 		return redirect("/");
 	}
@@ -42,6 +41,11 @@ public class NoteController extends Controller {
 			
 			notes.save(fromDB);
 		
+		return redirect("/");
+	}
+	
+	public static Result delete(String nodeid){
+		notes.removeById(nodeid);
 		return redirect("/");
 	}
 	
