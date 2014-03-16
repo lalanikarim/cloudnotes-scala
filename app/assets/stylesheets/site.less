@@ -7,30 +7,39 @@
 	}
 }
 .note {
-  font-family: "comic sans";
+  font-family: "sans";
   position:absolute;
   .note-header {
     margin: 0;
     text-align: center;
-    & textarea {
+    & input {
       height:20px;
-      border: none;      
+      border:none;
+      background-color:transparent;
+      font-weight: bold;
+      color: white;
+      font-size:large;   
+      width: 80%   
     }
     .note-header-buttons {
-      float:right;
-      
-      div {
-      }      
+	  div {
+        float:right;
+      }
     }
   }
   .note-body {
     width: 100%;
-    & > div {
+    > div {
       overflow: auto;
     }
     & textarea {
-      width: 90%;
+      //width: 90%;
       border:none;
+      background-color:transparent;
+      resize: none;
+      scroll: none;
+      overflow:hidden;
+      width:90%;
     }
     height: 100%;
   }
