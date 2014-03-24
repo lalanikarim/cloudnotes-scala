@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.Map;
 
+import org.codehaus.jackson.JsonNode;
+
 import models.Note;
 import models.NoteItem;
 import net.vz.mongodb.jackson.DBUpdate;
@@ -10,6 +12,7 @@ import play.*;
 import play.data.DynamicForm;
 import play.data.DynamicForm.Dynamic;
 import play.data.Form;
+import play.libs.Json;
 import play.modules.mongodb.jackson.MongoDB;
 import play.mvc.*;
 import views.html.note.*;
@@ -109,4 +112,12 @@ public class NoteController extends Controller {
     public static boolean isNumeric(String s) {  
         return java.util.regex.Pattern.matches("\\d+", s);  
     }  
+    
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result json() {
+    	JacksonDBCollection<Note, String> coll = MongoDB.collection(Note.class, String.class, play.api.Play.current());
+    	com.fasterxml.jackson.databind.JsonNode result = Json.toJson(coll.find().toArray());
+    	
+    	return ok(result);
+    }
 }

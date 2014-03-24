@@ -4,6 +4,8 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+GET		/jsonnotes					controllers.Application.jsonnotes()
+GET		/note/json					controllers.NoteController.json()
 GET		/note/create				controllers.NoteController.create()
 GET		/note:id					controllers.NoteController.get(id: Integer)
 POST	/note/save					controllers.NoteController.save()

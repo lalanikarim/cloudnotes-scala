@@ -16,6 +16,10 @@ Futures
 5. Items reordering
 6. Checklist module
 
+Progress
+--------
+3/23/2014: Added AngularJS for templating and AJAX
+
 Cloud Notes is built using the Java Play Framework (http://www.playframework.com) and uses MongoDB (http://www.mongodb.org) as its backend store.
 
 The application is licensed under GPL v2 which can be reviewed in its entirety at http://choosealicense.com/licenses/gpl-v2/
