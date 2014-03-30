@@ -21,53 +21,10 @@
 			</div>
 		</div>
 		<div>
-			<span>{{ notes.length }} notes total</span>
-			<ul class="unstyled">
-				<li ng-repeat="note in notes" ng-init="alert('loaded');">
-					<span>{{note.Id}}</span>
-				</li>
-			</ul>			
+			<span>{{ notes.length }} notes total</span>			
 		</div>
 		<div>
-		
-		<div ng-repeat="note in notes" id="{{note.Id}}" class="note ui-widget-content" style="top:{{note.Top}}px;left:{{note.Left}}px; width:{{note.Width}}px;height:{{note.Height}}px;position:absolute;z-index:{{note.Position}}">
-	    	<div class="note-header ui-widget-header">
-	   
-		    	<div class="note-header-buttons">
-		    		<div class="hoverable ui-state-default ui-corner-all">
-		    		@*form(routes.NoteController.delete(note.Id)){
-		    			<a class="delete-note ui-icon ui-icon-trash">X</a>
-		    		}*@
-		    		</div>
-		    		<div class="hoverable ui-state-default ui-corner-all">
-		    			<span class="ui-icon ui-icon-arrow-4-diag">X</span>
-		    		</div>
-		    	</div>
-		    	<div class="note-header-content">
-		    	@*form(routes.NoteController.save()){*@
-					<input id="title-{{note.Id}} name="title" type="text" class="editable" value="{{note.Title.length > 0? note.Title:note.Id}}"></input>
-					<input name="id" type="hidden" value="{{note.Id}}"/>
-				@*}*@
-				</div>
-				 		
-			</div>
-	    	<div class="note-body">
-	    		<div style="height:{{note.Height > 35?note.Height - 35:note.Height}}px">
-	    		@*for(item <- note.Items){*@
-	    		<div ng-repeat="item in note.Items">
-	    			@*form(routes.NoteController.saveitem(note.Id)){*@
-	    			<textarea name="notetext" id="note-line-{{note.Id}}-{{item.Id}}" class="editable" rows="{{item.NoteText.split('\n').length}}">{{item.NoteText}}</textarea>
-					<input name="itemid" value="{{item.Id}}" type="hidden"/>
-	    			@*}*@
-	    		</div>
-	    		@*}*@
-	    		@*form(routes.NoteController.saveitem(note.Id)){
-	    			<textarea name="notetext" id="note-line-@note.Id" class="editable" rows="1">Enter</textarea>
-	    			<input name="itemid" value="0" type="hidden"/>  
-	    		} *@   		
-	    		</div>  		
-	    	</div>
-	    </div>
+			<note ng-repeat="note in notes" id="{{note.Id}}" class="note ui-widget-content" style="top:{{note.Top}}px;left:{{note.Left}}px; width:{{note.Width}}px;height:{{note.Height}}px;position:absolute;z-index:{{note.Position}}"/>
 		</div>
 	</body>
 </html>

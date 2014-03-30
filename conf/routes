@@ -3,13 +3,13 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
-GET		/jsonnotes					controllers.Application.jsonnotes()
+GET     /                           controllers.Application.jsonnotes()
+#GET		/jsonnotes					controllers.Application.jsonnotes()
 GET		/note/json					controllers.NoteController.json()
 GET		/note/create				controllers.NoteController.create()
-GET		/note:id					controllers.NoteController.get(id: Integer)
+GET 	/note/:noteid				controllers.NoteController.getNote(noteid: String)
 POST	/note/save					controllers.NoteController.save()
-POST	/note/delete/:noteid		controllers.NoteController.delete(noteid: String)
+DELETE	/note/:noteid		controllers.NoteController.delete(noteid: String)
 POST	/note/saveitem/:noteid		controllers.NoteController.saveitem(noteid: String)
 POST	/note/saveposition			controllers.NoteController.saveposition()
 POST	/note/savedimension			controllers.NoteController.savedimension()
