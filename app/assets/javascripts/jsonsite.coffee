@@ -2,6 +2,9 @@ notesApp = angular.module "notesApp",[]
 notesApp.directive 'note', ($http,$interval) ->
 	restrict: 'E',templateUrl: '/assets/angular/views/note.html', link : (scope, element, attrs) ->
 		
+		element.find('input[name = "title"]').first().bind 'change', () ->
+			$http({method: 'POST', url: '/note/save', data:{id: element.attr('id'),title: element.find('input[name = "title"]').first().val()}}).success (data, status, headers, config) ->
+				scope.note = data
 		element.draggable({
 			start: () ->
 				scope.stopTimer()
@@ -33,12 +36,43 @@ notesApp.directive 'note', ($http,$interval) ->
 			true
 		scope.stopTimer = () ->
 			$interval.cancel scope.stop
+		
+		ta = element.find('textarea.editable').first()
+		ta.bind 'focus', () ->
+			ta.val('')
+		ta.bind 'blur', () ->
+			ta.val('Enter')
+		ta.bind 'change', () ->
+			$http({method: 'POST', url: '/note/saveitem/' + ta.attr('note-id'),data:{notetext: ta.val(), itemid: ta.attr('item-id')}}).success (data, status, headers, config) ->
+				ta.val('Enter')
+				scope.note = data
+				true
+			true
+		
+		
 		scope.startTimer()
 		
 		scope.$on '$destroy', () ->
 			scope.stopTimer()
 		true
-		
+
+notesApp.directive 'noteitem', ($http) ->
+	restrict: 'E',templateUrl: '/assets/angular/views/noteitem.html', link: (scope, element, attrs) ->
+		ta = element.find('textarea').first()
+		ta.bind 'change', () ->
+			$http({method: 'POST', url: '/note/saveitem/' + ta.attr('note-id'),data:{notetext: ta.val(), itemid: ta.attr('item-id')}}).success (data, status, headers, config) ->
+				scope.$parent.note = data
+				true
+			true
+		ta.bind 'focus', () ->
+			ta.val('')
+		ta.bind 'blur', () ->
+			ta.val('Enter')
+		ta.bind 'focusin', () ->
+			scope.$parent.stopTimer()
+		ta.bind 'blur', () ->
+			scope.$parent.startTimer()
+				
 notesApp.controller "NotesCtrl", ($scope,$http) ->
 	$http.get('/note/json').success (data) ->
 		$scope.notes = data;
@@ -48,7 +82,7 @@ notesApp.controller "NotesCtrl", ($scope,$http) ->
 		else
 			return 35;
 
-$('textarea.editable').each () ->
+$('textarea.editable').each (index, ta) ->
 	resizetextarea this
    
 $('.hoverable').bind 'mouseenter', () ->

@@ -36,17 +36,24 @@ public class NoteController extends Controller {
 		return ok();
 	}
 	
+	@BodyParser.Of(BodyParser.Json.class)
 	public static Result save(){
 		Map<String,String> data = dynamicForm.bindFromRequest().data();
 		
-			String id = data.get("id").toString();
-			String title = data.get("title").toString();
-			Note fromDB = notes.findOneById(id);
-			fromDB.Title = title;
-			
-			notes.save(fromDB);
+		String id = data.get("id").toString();
+		String title = data.get("title").toString();
+		Note fromDB = notes.findOneById(id);
+		fromDB.Title = title;
 		
-		return redirect("/");
+		notes.save(fromDB);
+	
+		com.fasterxml.jackson.databind.JsonNode result = Json.toJson(fromDB);
+		//result.put("status", "success");
+		//if(isXmlHttp()){
+			return ok(result);
+		//} else {
+		//	return redirect("/");
+		//}
 	}
 	
 	public static Result delete(String nodeid){
@@ -139,7 +146,12 @@ public class NoteController extends Controller {
 			}
 			notes.save(fromDB);
 		}
-		return redirect("/");
+		com.fasterxml.jackson.databind.JsonNode result = Json.toJson(fromDB);
+		//if(isXmlHttp()){
+			return ok(result);
+		//} else {
+		//	return redirect("/");
+		//}
 	}
     public static boolean isNumeric(String s) {  
         return java.util.regex.Pattern.matches("\\d+", s);  
