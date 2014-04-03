@@ -24,13 +24,17 @@ notesApp.directive 'note', ($http,$interval) ->
 				scope.stopTimer()
 				element.fadeOut 500
 				scope.$destroy()
-			
 		
 		scope.startTimer = () ->
 			scope.stop = $interval () ->
 				$http({method: 'GET', url: '/note/' + scope.note.Id}).success (data, status, headers, config) ->
 						scope.note = data
 						scope.startTimer()
+						true
+					.error (data, status, headers, config) ->
+						scope.stopTimer()
+						element.fadeOut 500
+						scope.$destroy()
 						true
 			, 5000, 1
 			true
@@ -49,7 +53,6 @@ notesApp.directive 'note', ($http,$interval) ->
 				true
 			true
 		
-		
 		scope.startTimer()
 		
 		scope.$on '$destroy', () ->
@@ -64,24 +67,26 @@ notesApp.directive 'noteitem', ($http) ->
 				scope.$parent.note = data
 				true
 			true
-		ta.bind 'focus', () ->
-			ta.val('')
-		ta.bind 'blur', () ->
-			ta.val('Enter')
 		ta.bind 'focusin', () ->
 			scope.$parent.stopTimer()
 		ta.bind 'blur', () ->
 			scope.$parent.startTimer()
+		ta.bind 'keyup', () ->
+			resizetextarea ta
 				
-notesApp.controller "NotesCtrl", ($scope,$http) ->
+notesApp.controller "NotesCtrl", ($scope,$http,$interval) ->
 	$http.get('/note/json').success (data) ->
-		$scope.notes = data;
+		$scope.notes = data
+	
 	$scope.widgetHeight = (note) ->
 		if(note.height != null && note.height > 35)
 			return note.height - 35
 		else
 			return 35;
-
+			
+	stopTimer = () ->
+		$interval.cancel $scope.stop
+	
 $('textarea.editable').each (index, ta) ->
 	resizetextarea this
    
