@@ -20,14 +20,14 @@ notesApp.directive 'note', ($http,$interval) ->
 					scope.startTimer()
 		})
 		element.find('.delete-note').first().bind 'click', () ->
-			$http({method: 'DELETE', url: '/note/' + scope.note.Id}).success () ->
+			$http({method: 'DELETE', url: '/note/' + scope.note._id}).success () ->
 				scope.stopTimer()
 				element.fadeOut 500
 				scope.$destroy()
 		
 		scope.startTimer = () ->
 			scope.stop = $interval () ->
-				$http({method: 'GET', url: '/note/' + scope.note.Id}).success (data, status, headers, config) ->
+				$http({method: 'GET', url: '/note/' + scope.note._id}).success (data, status, headers, config) ->
 						scope.note = data
 						scope.startTimer()
 						true
@@ -49,7 +49,7 @@ notesApp.directive 'note', ($http,$interval) ->
 		ta.bind 'change', () ->
 			$http({method: 'POST', url: '/note/saveitem/' + ta.attr('note-id'),data:{notetext: ta.val(), itemid: ta.attr('item-id')}}).success (data, status, headers, config) ->
 				ta.val('Enter')
-				scope.note = data
+				#scope.note = data
 				true
 			true
 		

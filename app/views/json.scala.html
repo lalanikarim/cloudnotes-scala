@@ -24,7 +24,7 @@
 			<span>{{ notes.length }} notes total</span>			
 		</div>
 		<div>
-			<note ng-repeat="note in notes" id="{{note.Id}}" class="note ui-widget-content" style="top:{{note.Top}}px;left:{{note.Left}}px; width:{{note.Width}}px;height:{{note.Height}}px;position:absolute;z-index:{{note.Position}}"/>
+			<note ng-repeat="note in notes" id="{{note._id}}" class="note ui-widget-content" style="top:{{note.top}}px;left:{{note.left}}px; width:{{note.width}}px;height:{{note.height}}px;position:absolute;z-index:{{note.position}}"/>
 		</div>
 	</body>
 </html>

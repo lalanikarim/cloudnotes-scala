@@ -3,12 +3,12 @@
 @import models._
 @import helper._
 
-	<div id="@note.Id" class="note ui-widget-content" style="top:@{note.Top}px;left:@{note.Left}px; width:@{note.Width}px;height:@{note.Height}px;position:absolute;z-index:@{note.Position}">
+	<div id="@note.Id.get.stringify" class="note ui-widget-content" style="top:@{note.Top}px;left:@{note.Left}px; width:@{note.Width}px;height:@{note.Height}px;position:absolute;z-index:@{note.Position}">
     	<div class="note-header ui-widget-header">
    
 	    	<div class="note-header-buttons">
 	    		<div class="hoverable ui-state-default ui-corner-all">
-	    		@form(routes.NoteController.delete(note.Id)){
+	    		@form(routes.NoteController.delete(note.Id.get.stringify)){
 	    			<a class="delete-note ui-icon ui-icon-trash">X</a>
 	    		}
 	    		</div>
@@ -18,8 +18,8 @@
 	    	</div>
 	    	<div class="note-header-content">
 	    	@form(routes.NoteController.save()){
-				<input id="title-@note.Id" name="title" type="text" class="editable" value="@if(note.Title.length() > 0){@note.Title} else {@note.Id}"></input>
-				<input name="id" type="hidden" value="@note.Id"/>
+				<input id="title-@note.Id.get.stringify" name="title" type="text" class="editable" value="@if(note.Title.length() > 0){@note.Title} else {@note.Id.get.stringify}"></input>
+				<input name="id" type="hidden" value="@note.Id.get.stringify"/>
 			}
 			</div>
 			 		
@@ -27,13 +27,13 @@
     	<div class="note-body">
     		<div style="height:@if(note.Height != null && note.Height > 35){@{note.Height - 35}}px">
     		@for(item <- note.Items){
-    			@form(routes.NoteController.saveitem(note.Id)){
-    			<textarea name="notetext" id="note-line-@note.Id-@item.Id" class="editable" rows="@item.NoteText.split('\n').size">@item.NoteText</textarea>
+    			@form(routes.NoteController.saveitem(note.Id.get.stringify)){
+    			<textarea name="notetext" id="note-line-@note.Id.get.stringify-@item.Id" class="editable" rows="@item.NoteText.split('\n').size">@item.NoteText</textarea>
 				<input name="itemid" value="@item.Id" type="hidden"/>
     			}
     		}
-    		@form(routes.NoteController.saveitem(note.Id)){
-    			<textarea name="notetext" id="note-line-@note.Id" class="editable" rows="1">Enter</textarea>
+    		@form(routes.NoteController.saveitem(note.Id.get.stringify)){
+    			<textarea name="notetext" id="note-line-@note.Id.get.stringify" class="editable" rows="1">Enter</textarea>
     			<input name="itemid" value="0" type="hidden"/>  
     		}    		
     		</div>  		

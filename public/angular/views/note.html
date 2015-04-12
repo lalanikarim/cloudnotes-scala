@@ -9,14 +9,14 @@
 	   		</div>
 	   	</div>
 	   	<div class="note-header-content">
-			<input id="title-{{note.Id}}" name="title" type="text" class="editable" value="{{note.Title.length > 0? note.Title:note.Id}}"></input>
+			<input id="title-{{note._id}}" name="title" type="text" class="editable" value="{{note.title.length > 0? note.title:note._id}}"></input>
 		</div>
 	 		
 	</div>
   	<div class="note-body">
-  		<div style="height:{{note.Height > 35?note.Height - 35:note.Height}}px">
-	 		<noteitem ng-repeat="item in note.Items"/>
- 			<textarea name="notetext" id="note-line-@note.Id" class="editable" note-id="{{note.Id}}" item-id="0" rows="1">Enter</textarea>
+  		<div style="height:{{note.height > 35?note.height - 35:note.height}}px">
+	 		<noteitem ng-repeat="item in note.items"/>
+ 			<textarea name="notetext" id="note-line-{{note._id}}" class="editable" note-id="{{note._id}}" item-id="0" rows="1">Enter</textarea>
  		</div>  		
  	</div>
  </div>
