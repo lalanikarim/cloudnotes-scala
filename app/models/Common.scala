@@ -2,6 +2,7 @@ package models
 
 import java.util.Date
 import reactivemongo.bson.{BSONDateTime,BSONReader,BSONWriter}
+import reactivemongo.play.json._
 
 object Common {
   val objectIdRegEx = """[a-fA-F0-9]{24}""".r

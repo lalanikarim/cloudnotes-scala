@@ -5,6 +5,7 @@ import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.libs.json.{Format, Json, Reads, Writes}
 import reactivemongo.bson._
+import reactivemongo.play.json._
 
 
 case class Note (
@@ -123,5 +124,4 @@ object Note {
 			val (id,w,h) = form
 			Some(id,w,h)}
 	)
-
 }

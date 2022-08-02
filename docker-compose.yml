@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  db:
+    hostname: db
+    image: docker.io/mongo:3.2.21-jessie
+    restart: always
+    volumes:
+      - ../CloudNotesSandbox/db:/data/db
+    ports:
+      - "27017:27017"
+  web:
+    depends_on:
+      - db
+    hostname: web
+    build: 
+      context: ./docker/alpine
+    volumes:
+      - .:/app:rw
+      - ../CloudNotesSandbox/web/sbt:/root/.sbt:rw
+      - ../CloudNotesSandbox/web/ivy2:/root/.ivy2:rw
+    ports:
+      - "9000:9000"
+

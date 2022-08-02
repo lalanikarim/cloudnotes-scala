@@ -2,7 +2,6 @@ package models
 
 import play.api.libs.json.Json
 import reactivemongo.bson._
-;
 
 case class User(UserId:String,FullName:String,Password:String)
 
